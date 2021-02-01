@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light osahan-nav shadow-sm">
+         <div class="container">
+            <a class="navbar-brand" href="/"><img alt="logo" src="/assets/images/logo.png" style="height: 74px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+               <!----Navigation---->
+               <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                       <a class="nav-link" href="#"><i class="icofont-sale-discount"></i> Help </a>
+                   </li>
+                  <li class="nav-item dropdown">
+                     <% if (!isAuthenticated) {%>
+                        <a class="nav-link" href="#" role="button" data-toggle="modal" data-target="#add-address-modal">
+                           Login <i class="fas fa-sign-in-alt"></i>
+                        </a>
+                     <% } else {%>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                           <% if(typeof user == 'object' && user && user.profile_image){ %>
+                              <img alt="Generic placeholder image" src="/uploads/<%=user.profile_image%>" class="nav-osahan-pic rounded-pill"> <%=user.name %>
+                           <% } else {%>
+                              <img alt="Generic placeholder image" src="/assets/images/default.jpg" class="nav-osahan-pic rounded-pill"> <%= //user.name %>
+                           <% } %>   
+                        </a>
+                     <% } %> 
+
+                     <div class="dropdown-menu dropdown-menu-right shadow-sm border-0">
+                        <a class="dropdown-item" href="/orders"><i class="icofont-sale-discount"></i> Orders</a>
+                        <a class="dropdown-item" href="/favourites"><i class="icofont-heart"></i> Favourites</a>
+                        <a class="dropdown-item" href="/payments"><i class="icofont-credit-card"></i> Payments</a>
+                        <a class="dropdown-item" href="/addresses"><i class="icofont-location-pin"></i> Addresses</a>
+                         <a class="dropdown-item" href="/logout"><i class="icofont-location-pin"></i> Logout</a>
+                     </div>
+                  </li>
+                 
+               </ul>
+            </div>
+         </div>
+      </nav>

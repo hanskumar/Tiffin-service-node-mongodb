@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light osahan-nav shadow-sm">
+         <div class="container">
+            <a class="navbar-brand" href="/"><img alt="logo" src="/assets/images/logo.png" style="height: 74px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+               <% if(Is_location_set){ %>
+               <div class="col-lg-5 col-md-4 col-sm-4" style="margin-top: 16px;cursor: pointer;" data-toggle="modal" data-target="#change_myModal">
+                  <span class="_location" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;display: block;margin-bottom: 13px;"><%=Is_location_set %></span>   
+               </div>
+                  <i class="icofont-location-pin" style="color: #ff3008 !important;cursor: pointer;margin-left: -18px;padding-top: 3px;" data-toggle="modal" data-target="#myModal"></i>
+               <% } %>
+               <ul class="navbar-nav ml-auto">
+                  <!--<li class="nav-item active">
+                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                  </li>-->
+                  <li class="nav-item">
+                     <a class="nav-link" href=""><i class="icofont-sale-discount"></i> Offers <span class="badge badge-danger">New</span></a>
+                  </li>
+                  <li class="nav-item dropdown">
+                     
+                     <% if (!isAuthenticated) {%>
+                        <a class="nav-link" href="#" role="button" data-toggle="modal" data-target="#login-model">
+                           Login <i class="fas fa-sign-in-alt"></i>
+                        </a>
+                     <% } else { %>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                           <img alt="Generic placeholder image" src="/assets/images/default.jpg" class="nav-osahan-pic rounded-pill"> <%=session.name %>
+                        </a>
+                     <% } %> 
+
+                     <div class="dropdown-menu dropdown-menu-right shadow-sm border-0">
+                        <a class="dropdown-item" href="/orders"><i class="icofont-sale-discount"></i> Orders</a>
+                        <a class="dropdown-item" href="/favourites"><i class="icofont-heart"></i> Favourites</a>
+                        <a class="dropdown-item" href="/payments"><i class="icofont-credit-card"></i> Payments</a>
+                        <a class="dropdown-item" href="/addresses"><i class="icofont-location-pin"></i> Addresses</a>
+                         <a class="dropdown-item" href="/logout"><i class="icofont-location-pin"></i> Logout</a>
+                     </div>
+                  </li>
+
+
+                  <li class="nav-item dropdown dropdown-cart">
+                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="fas fa-shopping-basket"></i> Cart
+                     <% if(typeof session.cart == 'object' && session.cart){ %>
+                        <span class="badge badge-success"><%=session.cart.totalQty%></span>
+                     <% } else { %>
+                        <span class="badge badge-success">0</span>
+                     <% } %>
+                     </a>
+                     <div class="dropdown-menu dropdown-cart-top p-0 dropdown-menu-right shadow-sm border-0">
+                        <% if(typeof session.cart == 'object' && session.cart) { %>
+                           <div class="dropdown-cart-top-header p-4">
+                              <img class="img-fluid mr-3" alt="osahan" src="" alt="cart">
+                              <h6 class="mb-0">Gus's World Famous Chicken</h6>
+                              <p class="text-secondary mb-0">310 S Front St, Memphis, USA</p>
+                              <small><a class="text-primary font-weight-bold" href="#">View Full Menu</a></small>
+                           </div>
+                           <div class="dropdown-cart-top-body border-top p-4">
+                              <% //for(let cart_items of session_cart_itmes){ %>
+                                 <p class="mb-2"><i class="icofont-ui-press text-danger food-item"></i> <%= //cart_items.item.item_name %><span class="float-right text-secondary">$314</span></p>
+                              <% //} %>   
+                              
+                           </div>
+                           <div class="dropdown-cart-top-footer border-top p-4">
+                              <p class="mb-0 font-weight-bold text-secondary">Sub Total <span class="float-right text-dark">$499</span></p>
+                              <small class="text-info">Extra charges may apply</small>  
+                           </div>
+                           <div class="dropdown-cart-top-footer border-top p-2">
+                              <a class="btn btn-success btn-block btn-lg" href="/checkout"> Checkout</a>
+                           </div>
+                        <% } else { %>
+                            <div class="dropdown-cart-top-body border-top p-4">
+                              <h4 class="mb-1 text-black-50">Empty Cart</h4>
+                              <p>Good food is always cooking! Go ahead, order some yummy items from the menu.</p>
+                           </div>
+                        <% } %>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+
+      
+
+      <%- include('change-location-model'); -%>

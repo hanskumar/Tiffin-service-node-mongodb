@@ -1,0 +1,36 @@
+
+      <!-- Edit Profile Modal -->
+      <div class="modal fade bd-example-modal-lg" id="edit-profile-modal" tabindex="-1" role="dialog" aria-labelledby="edit-profile" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="edit-profile">Edit profile</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+            <form name="edit_profile" method="POST" action="/update-profile">
+               <div class="modal-body">
+                 
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                           <label>Name
+                           </label>
+                           <input type="text" value="<%= (isAuthenticated) ? session.name : '' %>" class="form-control" placeholder="Enter name" name="name">
+                        </div>
+                        <div class="form-group col-md-12">
+                           <label>Email id
+                           </label>
+                           <input type="text" value="<%= (isAuthenticated) ? session.email : '' %>" class="form-control" placeholder="Enter Email id" name="email">
+                        </div>
+                     </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn d-flex w-50 text-center justify-content-center btn-outline-primary" data-dismiss="modal">CANCEL
+                  </button>
+                  <input type="submit" value="UPDATE" class="btn d-flex w-50 text-center justify-content-center btn-primary"/>
+               </div>
+            </form>
+            </div>
+         </div>
+      </div>

@@ -1,0 +1,170 @@
+<%- include('../partials/head'); -%>
+<%- include('../partials/menu'); -%>
+<%- include('../partials/login-model'); -%>
+<%- include('../partials/signup-model'); -%>
+
+<%- include('../pages/errors/error_msg'); -%>
+
+<section class="pt-5 pb-5 homepage-search-block position-relative" style="background-image:url(assets/images/header-background.jpg);">
+         <div class="banner-overlay"></div>
+         <div class="container">
+            <div class="row d-flex align-items-center">
+               <div class="col-md-8">
+                  <div class="homepage-search-title">
+                     <h1 class="mb-2 font-weight-normal" style="color: #ffff;"><span class="font-weight-bold">Find Awesome Deals</span> in Your Location</h1>
+                     <h5 class="mb-5 text-secondary font-weight-normal" style="color: #ffff!important;">Lists of top Home Made Tiffin Service, based on trends</h5>
+                  </div>
+                  <!-------Search-------->
+                  <div class="homepage-search-form">
+                     <form class="form-noborder">
+                        <div class="form-row">
+                          <p id="demo"></p>
+
+                           <div class="col-lg-10 col-md-10 col-sm-12 form-group">
+                              <input type="text" placeholder="Enter your delivery location" class="form-control form-control-lg complete_address">
+                              <a class="locate-me" href="javascript:void(0)"><i class="icofont-ui-pointer"></i> Locate Me</a>
+                           </div>
+                           <div class="col-lg-2 col-md-2 col-sm-12 form-group">
+                              <a href="" class="btn btn-primary btn-block btn-lg btn-gradient">Search</a>
+                              <!--<button type="submit" class="btn btn-primary btn-block btn-lg btn-gradient">Search</button>-->
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+                  <h6 class="mt-4 text-shadow font-weight-normal" style="color: #ffff!important;">E.g. Beverages, Pizzas, Chinese, Bakery, Indian...</h6>
+                  <div class="owl-carousel owl-carousel-category owl-theme">
+                     <div class="item">
+                        <div class="osahan-category-item">
+                           <a href="#">
+                              <img class="img-fluid" src="" alt="">
+                              <h6>American</h6>
+                              <p>156</p>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="item">
+                        <div class="osahan-category-item">
+                           <a href="#">
+                              <img class="img-fluid" src="" alt="">
+                              <h6>Pizza</h6>
+                              <p>120</p>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="item">
+                        <div class="osahan-category-item">
+                           <a href="#">
+                              <img class="img-fluid" src="" alt="">
+                              <h6>Healthy</h6>
+                              <p>130</p>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="item">
+                        <div class="osahan-category-item">
+                           <a href="#">
+                              <img class="img-fluid" src="" alt="">
+                              <h6>Vegetarian</h6>
+                              <p>120</p>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="item">
+                        <div class="osahan-category-item">
+                           <a href="#">
+                              <img class="img-fluid" src="" alt="">
+                              <h6>Chinese</h6>
+                              <p>111</p>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="item">
+                        <div class="osahan-category-item">
+                           <a href="#">
+                              <img class="img-fluid" src="" alt="">
+                              <h6>Hamburgers</h6>
+                              <p>958</p>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="item">
+                        <div class="osahan-category-item">
+                           <a href="#">
+                              <img class="img-fluid" src="" alt="">
+                              <h6>Dessert</h6>
+                              <p>56</p>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="item">
+                        <div class="osahan-category-item">
+                           <a href="#">
+                              <img class="img-fluid" src="" alt="">
+                              <h6>Chicken</h6>
+                              <p>40</p>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="item">
+                        <div class="osahan-category-item">
+                           <a href="#">
+                              <img class="img-fluid" src="" alt="">
+                              <h6>Indian</h6>
+                              <p>156</p>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="osahan-slider pl-4 pt-3">
+                     <div class="owl-carousel homepage-ad owl-theme">
+                        <div class="item">
+                           <a href=""><img class="img-fluid rounded" src="/assets/images/slider.png"></a>
+                        </div>
+                        <div class="item">
+                           <a href=""><img class="img-fluid rounded" src="/assets/images/slider.png"></a>
+                        </div>
+                        <div class="item">
+                           <a href=""><img class="img-fluid rounded" src="/assets/images/slider1.png"></a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+     
+      
+      <% if (!isAuthenticated) {%>
+         <section class="section pt-5 pb-5 bg-white becomemember-section border-bottom">
+            <div class="container">
+               <div class="section-header text-center white-text">
+                  <h2>Become a Member</h2>
+                  <p>Lorem Ipsum is simply dummy text of</p>
+                  <span class="line"></span>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12 text-center">
+                     <a class="btn btn-success btn-lg" href="#" role="button" data-toggle="modal" data-target="#sigunp-modal">
+                        Create an Account <i class="fa fa-chevron-circle-right"></i>
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </section>
+      <% } %>
+      <section class="section pt-5 pb-5 text-center bg-white">
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-12">
+                  <h5 class="m-0">Operate food store or restaurants? <a href="/partner_with_us" target="_blank">Work With Us</a></h5>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <%- include('../partials/footer'); -%>
+      <%- include('../partials/footer_script'); -%>
+
+      <script src="/assets/js/location.js"></script>

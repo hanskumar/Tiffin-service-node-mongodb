@@ -1,0 +1,251 @@
+<% include ../partials/head %>
+<% include ../partials/secure_menu %>
+
+      <% include ../partials/login-model %>
+      <% include ../partials/add-address-model %>
+      <% include ../partials/signup-model %>
+      <% include ../pages/errors/error_msg %>
+      <section class="offer-dedicated-body mt-4 mb-4 pt-2 pb-2">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-8">
+                  <div class="offer-dedicated-body-left">
+                     <div class="bg-white rounded shadow-sm p-4 mb-4">
+                        <h4 class="mb-1">Account</h6>
+                          <h6 class="mb-3 text-black-50">To place your order now, log in to your existing account or sign up.</h6>
+                           <div class="input-group input-group-sm mb-2">
+                              
+                              <div class="input-group-append" style="padding: 0px 18px;">
+                                 <% if (!isAuthenticated) {%>
+                                    <a class="nav-link" href="#" role="button" data-toggle="modal" data-target="#login-model">
+                                       <button class="btn btn-outline-danger btn-sm" type="button"><i class="fas fa-sign-in-alt"></i>  Login</button>
+                                    </a> 
+                                 <% } else { %> 
+                                     
+                                    <% if(typeof user == 'object' && user){ %>
+                                       Hello <%=user.name %> <%=user.mobile %> 
+                                    <% } %>
+
+                                 <% } %>
+                              </div>
+                              <% if (!isAuthenticated) {%>
+                                 <div class="input-group-append">
+                                    <a class="nav-link" href="#" role="button" data-toggle="modal" data-target="#sigunp-modal">
+                                       <button class="btn btn-outline-danger btn-sm" type="button"><i class="fas fa-sign-in-alt"></i>  Sign Up</button>
+                                    </a> 
+                                    <!--<button class="btn btn-outline-danger btn-sm" type="button"><i class="fas fa-sign-in-alt"></i>  Sign Up</button>-->
+                                 </div>
+                              <% }  %> 
+                           </div>
+                        
+                     </div>
+					 <div class="pt-2"></div>
+					      <div class="bg-white rounded shadow-sm p-4 mb-4">
+                        <h4 class="mb-1 text-black-50">Delivery address</h4>
+                        <% if (isAuthenticated) {%>
+                           <% if (delivery_add.length > 0) {  %>
+                              <div class="row">
+                              <% for (let address of delivery_add) { 
+                                 
+                                 if(delivery_status == 1 && slected_delivery_address.address_id == address.address_id){
+                                    var slected_class ="selected_delivery";
+                                    var text ="Selected";
+                                 } else {
+                                    var slected_class ="fafsdf";
+                                    var text ="DELIVER HERE";
+                                 }
+                                 
+                                 %>
+                                 <div class="col-md-6 _3p8Mf" style="cursor: pointer;" data-id="<%= address.address_id %>" >
+                                       <div class="bg-white card addresses-item mb-4 border border-success <%=slected_class %>">
+                                          <div class="gold-members p-4">
+                                             <div class="media">
+                                             <div class="mr-3"><i class="icofont-location-pin icofont-3x"></i></div>
+                                             <div class="media-body">
+                                                   <h6 class="mb-1 text-black"><%= address.address_type.toUpperCase() %></h6>
+                                                   <p class="text-black"><%= address.address %> <br><%= address.landmark %>
+                                                   </p>
+                                                   <p class="mb-0 text-black font-weight-bold"><a class="btn btn-sm btn-success mr-2" href="javascript:void(0)"> <%=text %></a> 
+                                                      
+                                                   </p>
+                                             </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                 </div>
+                              <% } %>
+                              <div class="col-md-6">
+                                 <div class="bg-white card addresses-item" style="height: 200px;">
+                                    <div class="gold-members p-4">
+                                       <div class="media">
+                                          <div class="mr-3"><i class="icofont-location-pin icofont-3x"></i></div>
+                                          <div class="media-body">
+                                             <h6 class="mb-1 text-secondary">Add New Address</h6>
+                                             <p>Click here to add new address
+                                             </p>
+                                             <p class="mb-0 text-black font-weight-bold" style="margin-top: 40px;"><a data-toggle="modal" data-target="#add-address-modal" class="btn btn-sm btn-primary mr-2" href="#"> ADD NEW ADDRESS</a> 
+                                             </p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              </div> 
+                           <% } else if(delivery_status == 1){%> <br/><p class="mb-1 text-black-50"><%=slected_delivery_address.flat_door_no%>
+                            <br/><%=slected_delivery_address.address%> 
+                            <br/><%=slected_delivery_address.landmark%></p> <a href="#" class="" >Change </a> <% } %>
+                        <% } %>   
+                     </div>
+					 <div class="pt-2"></div>
+                     <div class="bg-white rounded shadow-sm p-4 osahan-payment">
+                        <h4 class="mb-1 text-black-50">Payment method</h4>
+                        <%=delivery_status %>
+                        <%if(delivery_status && isAuthenticated){%>
+                        <div class="row">
+                           <div class="col-sm-4 pr-0">
+                              <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="icofont-credit-card"></i> Credit/Debit Cards</a>
+
+
+                                
+
+
+                                 <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="icofont-card"></i> Wallet</a>
+                                 <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="icofont-bank-alt"></i> Netbanking</a>
+                                 <a class="nav-link" id="v-pills-cash-tab" data-toggle="pill" href="#v-pills-cash" role="tab" aria-controls="v-pills-cash" aria-selected="false"><i class="icofont-money"></i> Pay on Delivery</a>
+                              </div>
+                           </div>
+                           <div class="col-sm-8 pl-0">
+                              <div class="tab-content h-100" id="v-pills-tabContent">
+                                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                    <h6 class="mb-3 mt-0 mb-3">Add new card</h6>
+                                    <p>WE ACCEPT <span class="osahan-card">
+                                       <i class="icofont-visa-alt"></i> <i class="icofont-mastercard-alt"></i> <i class="icofont-american-express-alt"></i> <i class="icofont-payoneer-alt"></i> <i class="icofont-apple-pay-alt"></i> <i class="icofont-bank-transfer-alt"></i> <i class="icofont-discover-alt"></i> <i class="icofont-jcb-alt"></i>
+                                       </span>
+                                    </p>
+                                    <form>
+                                       <div class="form-row">
+                                          <div class="form-group col-md-12">
+                                             <label for="inputPassword4">Card number</label>
+                                             <div class="input-group">
+                                                <input type="number" class="form-control" placeholder="Card number">
+                                                <div class="input-group-append">
+                                                   <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="icofont-card"></i></button>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="form-group col-md-8">
+                                             <label>Valid through(MM/YY)
+                                             </label>
+                                             <input type="number" class="form-control" placeholder="Enter Valid through(MM/YY)">
+                                          </div>
+                                          <div class="form-group col-md-4">
+                                             <label>CVV
+                                             </label>
+                                             <input type="number" class="form-control" placeholder="Enter CVV Number">
+                                          </div>
+                                          <div class="form-group col-md-12">
+                                             <label>Name on card
+                                             </label>
+                                             <input type="text" class="form-control" placeholder="Enter Card number">
+                                          </div>
+                                          <div class="form-group col-md-12">
+                                             <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                <label class="custom-control-label" for="customCheck1">Securely save this card for a faster checkout next time.</label>
+                                             </div>
+                                          </div>
+                                          <div class="form-group col-md-12 mb-0">
+                                             <a href="thanks.html" class="btn btn-success btn-block btn-lg">PAY $1329
+                                             <i class="icofont-long-arrow-right"></i></a>
+                                          </div>
+                                       </div>
+                                    </form>
+                                 </div>
+                                
+                                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                    
+                                    <div class="border shadow-sm-sm p-4 d-flex bg-white align-items-center mb-3">
+                                       <i class="icofont-paypal-alt mr-3 icofont-3x"></i>
+                                       <div class="d-flex flex-column">
+                                          <div style="padding-bottom: 12px;">
+                                             <img alt="paytm" src="/assets/images/paytm.png" class="" style="max-height: 30px;width: auto;"> 
+                                          </div>
+                                          <p class="card-text">Paytm lets you order now & pay later at no extra cost.</p>
+                                          <a href="#" class="card-link font-weight-bold">LINK ACCOUNT <i class="icofont-link-alt"></i></a>
+                                       </div>
+                                    </div>
+                                    <div class="border shadow-sm-sm p-4 d-flex bg-white align-items-center">
+                                       <i class="icofont-diners-club mr-3 icofont-3x"></i>
+                                       <div class="d-flex flex-column">
+                                          <div style="padding-bottom: 12px;">
+                                             <img alt="phonepe" src="/assets/images/phonepe.png" class="" style="max-height: 30px;width: auto;"> 
+                                          </div>
+                                          <p class="card-text">PhonePe (Wallet/UPI/Cards).</p>
+                                          <a href="#" class="card-link font-weight-bold">LINK ACCOUNT <i class="icofont-link-alt"></i></a>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                                    <h6 class="mb-3 mt-0 mb-3">Netbanking</h6>
+                                    <form>
+                                       <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                          <label class="btn btn-outline-primary active">
+                                          <input type="radio" name="options" id="option1" autocomplete="off" checked> HDFC <i class="icofont-check-circled"></i>
+                                          </label>
+                                          <label class="btn btn-outline-primary">
+                                          <input type="radio" name="options" id="option2" autocomplete="off"> ICICI <i class="icofont-check-circled"></i>
+                                          </label>
+                                          <label class="btn btn-outline-primary">
+                                          <input type="radio" name="options" id="option3" autocomplete="off"> AXIS <i class="icofont-check-circled"></i>
+                                          </label>
+                                       </div>
+                                       <hr>
+                                       <div class="form-row">
+                                          <div class="form-group col-md-12">
+                                             <label>Select Bank
+                                             </label>
+                                             <br>
+                                             <select class="custom-select form-control">
+                                                <option selected>Bank</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                             </select>
+                                          </div>
+                                          <div class="form-group col-md-12 mb-0">
+                                             <a href="thanks.html" class="btn btn-success btn-block btn-lg">PAY $1329
+                                             <i class="icofont-long-arrow-right"></i></a>
+                                          </div>
+                                       </div>
+                                    </form>
+                                 </div>
+                                 <div class="tab-pane fade" id="v-pills-cash" role="tabpanel" aria-labelledby="v-pills-cash-tab">
+                                    <h6 class="mb-3 mt-0 mb-3">Cash</h6>
+                                    <p>Please keep exact change handy to help us serve you better</p>
+                                    <hr>
+                                    <form>
+                                       <a href="thanks.html" class="btn btn-success btn-block btn-lg">PAY $1329
+                                       <i class="icofont-long-arrow-right"></i></a>
+                                 </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+
+                        <% } %>
+                     </div>
+                  </div>
+               </div>
+               <!-----cart navigation------->
+               <% include ../partials/cart_side_navigation %>
+
+               
+            </div>
+         </div>
+      </section>
+	  
+	   <% include ../partials/footer %>
+      <% include ../partials/footer_script %>
+      <script src="/assets/js/checkout.js"></script>
+      <script src="/assets/js/custom.js"></script>

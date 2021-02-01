@@ -1,0 +1,59 @@
+<div class="modal fade" id="add-address-modal" tabindex="-1" role="dialog" aria-labelledby="add-address" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+         <form name="add_address" method="POST" action="/add_address">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="add-address">Add Delivery Address</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  
+                     <div class="form-row">
+                        <div class="form-group col-md-12">
+                           <label for="inputPassword4">Delivery Address</label>
+                           <div class="input-group">
+                              <input type="text" class="form-control" placeholder="Delivery Area" name="address">
+                              <div class="input-group-append">
+                                 <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="icofont-ui-pointer"></i></button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                           <label for="inputPassword4">Door/Flate No
+                           </label>
+                           <input type="text" class="form-control" placeholder="Door/Flate No" name="flate_no">
+                        </div>
+                        <div class="form-group col-md-12">
+                           <label for="inputPassword4">Landmark
+                           </label>
+                           <input type="text" class="form-control" placeholder="landmark e.g. Opposite Gold Souk Mall" name="landmark">
+                        </div>
+                        <div class="form-group mb-0 col-md-12">
+                           <label for="inputPassword4">Office Type
+                           </label>
+                           <div class="btn-group btn-group-toggle d-flex justify-content-center" data-toggle="buttons">
+                              <label class="btn btn-info active" style="cursor: pointer;">
+                              <input type="radio" name="address_type" id="option1" value="home" checked> Home
+                              </label>
+                              <label class="btn btn-info" style="cursor: pointer;">
+                              <input type="radio" name="address_type" id="option2" value="work"> Work
+                              </label>
+                              <label class="btn btn-info" style="cursor: pointer;">
+                              <input type="radio" name="address_type" id="option3" value="other"> Other
+                              </label>
+                           </div>
+                        </div>
+                     </div>
+                  
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn d-flex w-50 text-center justify-content-center btn-outline-primary" data-dismiss="modal">CANCEL
+                  </button>
+                  <input type="submit" class="btn d-flex w-50 text-center justify-content-center btn-primary" value="SUBMIT">
+               </div>
+            </div>
+         </form>   
+         </div>
+      </div>
