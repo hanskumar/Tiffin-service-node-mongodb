@@ -6,9 +6,9 @@ const Noty = require('noty');
  */
 exports.index = (req, res,next) => {
 
-    /* if(req.cookies.userLocation){
+    if(req.cookies.userLocation){
         res.redirect("/restaurants");
-    } */
+    } 
 
     res.render('pages/index', {
         title: 'Tifin Service',

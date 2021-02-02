@@ -1,7 +1,5 @@
 (function($) {
 
-
-
     var form = $("#signup-form");
     form.validate({
         errorPlacement: function errorPlacement(error, element) {
@@ -52,7 +50,8 @@
             return form.valid();
         },
         onFinished: function(event, currentIndex) {
-            alert('Submited');
+            //alert('Submited');
+            form.submit();
         },
         onStepChanged: function(event, currentIndex, priorIndex) {
 

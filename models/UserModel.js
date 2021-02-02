@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const slug = require('mongoose-slug-generator');
+
+//Initialize
+mongoose.plugin(slug);
 
 const userSchema = new mongoose.Schema(
   {
@@ -34,7 +38,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Password is required']
     },
-    role: { type: String, enum: ['admin', 'user','resturant'], default: 'user' },
+    role: { type: String, enum: ['admin', 'user','restaurant'], default: 'user' },
     profile_image: {
       type: String,
       default:'/assets/images/default.jpg'
@@ -51,9 +55,10 @@ const userSchema = new mongoose.Schema(
         default:'0.00'
     },
     restaurant_detail:[{
-        slug:{
-          type: String,
-        },
+
+        //Define the slug parameters
+        slug: { type: String, slug: "name" },
+
         gst_no:{
           type: String,
         },
@@ -84,10 +89,13 @@ const userSchema = new mongoose.Schema(
 
         delivery_distance:{
           type: String,
+          default:0
         },
 
         delivery_boys:{
-          type: String,
+          type: Number,
+          integer: true,
+          default:0
         },
 
         cuisine_type:{

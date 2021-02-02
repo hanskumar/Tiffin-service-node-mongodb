@@ -50,11 +50,4 @@ router.get('/get_address_data/:address_id',UserController.get_address_data);
 
 router.post('/update_address',UserController.update_address);
 
-
-/**
-* ===========================Resturant Routes===============================
-*/
-router.get('/partner_with_us',ResturantController.partner_with_us);
-
-
 module.exports = router;

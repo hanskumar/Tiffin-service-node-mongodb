@@ -89,13 +89,7 @@ exports.signup = async (req, res, next) => {
         console.log(err);
         req.flash('error', 'Something Went Wrong please try again');
         res.redirect('/');
-     })
-
-
-
-
-    
-        
+     })    
 }
 
 exports.logout = (req, res) => {

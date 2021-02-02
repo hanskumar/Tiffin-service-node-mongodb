@@ -85,6 +85,8 @@ app.use((req, res, next) => {
  */
 app.use('/',require("./routes/Routes"));
 
+app.use('/restaurant',require("./routes/RestaurantRoutes"));
+
 //The 404 Route (ALWAYS Keep this as the last route)
 /* app.get('*', function(req, res){
     res.render('pages/errors/404', { title: 'Page not found' });

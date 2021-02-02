@@ -121,7 +121,7 @@ exports.add_address = (req, res, next) => {
 
     if(!address || !landmark || !address_type){
         req.flash('error_msg', "Fileds are Required")
-        return res.redirect('/back');
+        return res.redirect('back');
     }
 
     const add_address = new Address({

@@ -9,16 +9,14 @@
     <title>Sign Up Form</title>
 
     <!-- Main css -->
-     <link rel="stylesheet" href="assets/restaurant/css/restaurant_style.css">
-
-
+     <link rel="stylesheet" href="/assets/restaurant/css/restaurant_style.css">
 </head>
 <body>
 
     <div class="main">
 
         <div class="container">
-            <form method="POST" id="signup-form" class="signup-form" action="#">
+            <form method="POST" id="signup-form" class="signup-form" action="/restaurant/register">
                 <div>
                     <h3>Outlet Information</h3>
                     <fieldset>
@@ -29,7 +27,7 @@
                                 <label class="form-label">Name</label>
                                 <div class="form-flex">
                                     <div class="form-group">
-                                        <input type="text" name="first_name" id="first_name" />
+                                        <input type="text" name="name" id="first_name" />
                                         
                                     </div>
                                 </div>
@@ -37,11 +35,16 @@
                             <div class="form-group">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" name="email" id="email" />
-                                <span class="text-input">Example  :<span>  Jeff@gmail.com</span></span>
+                                <!--<span class="text-input">Example  :<span>  Jeff@gmail.com</span></span>-->
                             </div>
                             <div class="form-group">
                                 <label for="phone" class="form-label">Phone</label>
-                                <input type="text" name="phone" id="phone" />
+                                <input type="text" name="mobile_no" id="phone" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Password</label>
+                                <input type="text" name="password" id="phone" />
                             </div>
                            
                             <div class="form-group">
@@ -51,12 +54,12 @@
 
                             <div class="form-group">
                                 <label for="phone" class="form-label">Latitude</label>
-                                <input type="text" name="phone" id="phone" />
+                                <input type="text" name="latitude" id="phone" />
                             </div>
 
                             <div class="form-group">
                                 <label for="phone" class="form-label">Longitude</label>
-                                <input type="text" name="phone" id="phone" />
+                                <input type="text" name="longitude" id="phone" />
                             </div>
                         </div>
                     </fieldset>
@@ -70,7 +73,7 @@
                                 <label class="form-label">Bank Name</label>
                                 <div class="form-flex">
                                     <div class="form-group">
-                                        <input type="text" name="first_name" id="first_name" />
+                                        <input type="text" name="bank_name" id="bank_name" />
                                         <span class="text-input">First</span>
                                     </div>
                                 </div>
@@ -80,7 +83,7 @@
                                 <label class="form-label">PanCard</label>
                                 <div class="form-flex">
                                     <div class="form-group">
-                                        <input type="text" name="first_name" id="first_name" />
+                                        <input type="text" name="pancard" id="pancard" />
                                         <span class="text-input">First</span>
                                     </div>
                                 </div>
@@ -98,7 +101,7 @@
                                 <label class="form-label">Delivery Distance</label>
                                 <div class="form-flex">
                                     <div class="form-group">
-                                        <input type="text" name="first_name" id="first_name" />
+                                        <input type="text" name="delivery_distance" id="first_name" />
                                         <span class="text-input">First</span>
                                     </div>
                                 </div>
@@ -108,7 +111,7 @@
                                 <label class="form-label">Tiffin Start From</label>
                                 <div class="form-flex">
                                     <div class="form-group">
-                                        <input type="text" name="first_name" id="first_name" />
+                                        <input type="text" name="tifiin_start_from" id="tifiin_start_from" />
                                         <span class="text-input">First</span>
                                     </div>
                                 </div>
@@ -126,8 +129,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </fieldset>
                 </div>
@@ -137,14 +138,14 @@
     </div>
 
     <!-- JS -->
-    <script src="assets/restaurant/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/restaurant/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="assets/restaurant/vendor/jquery-validation/dist/additional-methods.min.js"></script>
-    <script src="assets/restaurant/vendor/jquery-steps/jquery.steps.min.js"></script>
-    <script src="assets/restaurant/vendor/minimalist-picker/dobpicker.js"></script>
-    <script src="assets/restaurant/vendor/nouislider/nouislider.min.js"></script>
-    <script src="assets/restaurant/vendor/wnumb/wNumb.js"></script>
-    <script src="assets/restaurant/js/main.js"></script>
+    <script src="/assets/restaurant/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/restaurant/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/assets/restaurant/vendor/jquery-validation/dist/additional-methods.min.js"></script>
+    <script src="/assets/restaurant/vendor/jquery-steps/jquery.steps.min.js"></script>
+    <script src="/assets/restaurant/vendor/minimalist-picker/dobpicker.js"></script>
+    <script src="/assets/restaurant/vendor/nouislider/nouislider.min.js"></script>
+    <script src="/assets/restaurant/vendor/wnumb/wNumb.js"></script>
+    <script src="/assets/restaurant/js/main.js"></script>
 </body>
 
 </html>
