@@ -25,7 +25,6 @@ router.post('/signup',AuthController.signup);
 
 router.get('/logout',AuthController.logout);
 
-
 /*--------Get User Current Address using Lat Long (Reverse GeoCoding)-------------*/
 router.get('/reverse-geocode',LocationController.reverse_geocode);
 

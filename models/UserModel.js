@@ -79,8 +79,11 @@ const userSchema = new mongoose.Schema(
           state: String,
           zone: String,
           address:String,
-          latitude:String,
-          longitude:String
+        },
+
+        location: {
+          type: { type: String },
+          coordinates: [Number],
         },
 
         alternate_number:{
@@ -111,5 +114,7 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+userSchema.index({ "location": "2dsphere" });
 
 module.exports = mongoose.model("User", userSchema);

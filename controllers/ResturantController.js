@@ -44,8 +44,13 @@ exports.register = async (req, res, next) => {
                 state: '',
                 zone: '',
                 address:address,
-                latitude:latitude,
-                longitude:longitude
+                /* latitude:latitude,
+                longitude:longitude */
+            },
+
+            location: {
+                type: 'Point',
+                coordinates: [latitude,longitude],
             },
             delivery_distance:delivery_distance,
             tifiin_start_from:tifiin_start_from,
@@ -69,28 +74,44 @@ exports.register = async (req, res, next) => {
 exports.restaurants = (req, res,next) => {
 
     if(req.cookies.userLocation){
-        console.log(req.cookies.userLocation.location);
-
-        sequelize.query('SELECT *, (6371 * acos( cos( radians('+req.cookies.userLocation.lat+') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('+req.cookies.userLocation.long+') ) + sin( radians('+req.cookies.userLocation.lat+') ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_info HAVING distance < 18', { type: sequelize.QueryTypes.SELECT})
-        .then(result => {
-            //console.log(result);
-
-            res.render('pages/restaurants', {
-                resturants: result,
-                title: 'Tifin Service',
-                path: '/',
-                user: req.session,
-                error:'',
-                success: ''
-            }); 
-        }).catch(function(err){
-            //console.log('Oops! something went wrong, : ', err);
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error); 
-        });
-        //res.send(req.cookies.userLocation.lat);
         
+
+        //return res.send(req.cookies.userLocation);
+
+        const lat = req.cookies.userLocation.lat;
+        const long = req.cookies.userLocation.long;
+
+        console.log(lat);
+
+        console.log(long);
+
+        const query = {
+            "location.geo": {
+              $near: {
+                $geometry: { type: "Point", coordinates: [-73.9667, 40.78] },
+                $maxDistance: 10000,
+              },
+            },
+        };
+
+        User.aggregate([
+            {
+                $geoNear: {
+                    near :{type: "Point", "$restaurant_detail.location.coordinates":[lat,long]},
+                    distanceField: "distance",
+                   // maxDistance: 2,
+                    spherical: true
+                }
+            }
+        ],(err,data)=>{
+            if(err) {
+                console.log(err);
+              next(err);
+              return;
+            }
+            res.send(data);
+        })
+
     } else {
         return res.redirect('/');
     }
