@@ -42,9 +42,17 @@ router.post('/upload_profile_image',multerupload.upload,UserController.upload_pr
 
 router.get('/favourites',UserController.favourites);
 
+router.get('/addresses',UserController.address);
+
+router.post('/add_address',UserController.add_address);
+
+router.get('/get_address_data/:address_id',UserController.get_address_data);
+
+router.post('/update_address',UserController.update_address);
+
 
 /**
-* Resturant Routes
+* ===========================Resturant Routes===============================
 */
 router.get('/partner_with_us',ResturantController.partner_with_us);
 

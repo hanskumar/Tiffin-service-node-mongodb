@@ -1,17 +1,17 @@
-<% include ../partials/head %>
-<% include ../partials/menu %>
-
-      <% include ../partials/edit-profile-model %>
+<%- include('../partials/head'); -%>
+<%- include('../partials/menu'); -%>
+<%- include('../pages/errors/error_msg'); -%>
+<%- include('../partials/edit-profile-model'); -%>
 	  
-      <!---------------------------- Modal ------------------------->
-      <% include ../partials/add-address-model %>
-      <!-----------Modal-------------->
-    
+   <!---------------------------- Modal ------------------------->
+   <%- include('../partials/add-address-model'); -%>
+   <!-----------Modal-------------->
+
       <section class="section pt-4 pb-4 osahan-account-page">
          <div class="container">
             <div class="row">
                <!-----User side Navigation-->
-               <% include ../partials/side_navigation %>
+               <%- include('../partials/side_navigation'); -%>
 
                <div class="col-md-9">
                   <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
@@ -37,7 +37,7 @@
                                                <!--- <a class="text-primary mr-3 manage_address1 fancybox ajax" data-toggle="modal" data-target="#add-address-modal"  href="#" data-id="<%= address.address_id %>">
                                                 <i class="icofont-ui-edit"></i> EDIT</a>---> 
 
-                                                <a href="/get_address_data/<%= address.address_id %>" class="text-primary mr-3 fancybox ajax" data-id="<%= address.address_id %>">
+                                                <a href="/get_address_data/<%= address._id %>" class="text-primary mr-3 fancybox ajax" data-id="<%= address.address_id %>">
                                                 <i class="icofont-ui-edit"></i> EDIT</a> 
                                                 
                                                 <a class="text-danger" data-toggle="modal" data-target="#delete-address-modal" address-id="<%= address.address_id %>" href="#" onclick="delete_address(this)" data-confirm="Are you sure to delete this item?"><i class="icofont-ui-delete"></i> DELETE</a></p>
@@ -51,48 +51,42 @@
                         <% } %>
 						
 						<div class="col-md-6">
-                                 <div class="bg-white card addresses-item" style="height: 200px;">
-                                    <div class="gold-members p-4">
-                                       <div class="media">
-                                          <div class="mr-3"><i class="icofont-location-pin icofont-3x"></i></div>
-                                          <div class="media-body">
-                                             <h6 class="mb-1 text-secondary">Add New Address</h6>
-                                             <p>Click here to add new address
-                                             </p>
-                                             <p class="mb-0 text-black font-weight-bold" style="margin-top: 40px;"><a data-toggle="modal" data-target="#add-address-modal" class="btn btn-sm btn-primary mr-2" href="#"> ADD NEW ADDRESS</a> 
-                                             </p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
+                     <div class="bg-white card addresses-item" style="height: 200px;">
+                        <div class="gold-members p-4">
+                           <div class="media">
+                              <div class="mr-3"><i class="icofont-location-pin icofont-3x"></i></div>
+                              <div class="media-body">
+                                 <h6 class="mb-1 text-secondary">Add New Address</h6>
+                                 <p>Click here to add new address
+                                 </p>
+                                 <p class="mb-0 text-black font-weight-bold" style="margin-top: 40px;"><a data-toggle="modal" data-target="#add-address-modal" class="btn btn-sm btn-primary mr-2" href="#"> ADD NEW ADDRESS</a> 
+                                 </p>
                               </div>
-						
-						
-						
-						
-						
-						
+                           </div>
                         </div>
                      </div>
+                  </div>
                   </div>
                </div>
             </div>
          </div>
-      </section>
+      </div>
+   </div>
+</section>
 
 
-      <section class="section pt-5 pb-5 text-center bg-white">
-         <div class="container">
-            <div class="row">
-               <div class="col-sm-12">
-                  <h5 class="m-0">Operate food store or restaurants? <a href="https://askbootstrap.com/preview/osahan-eat/login.html">Work With Us</a></h5>
-               </div>
+   <section class="section pt-5 pb-5 text-center bg-white">
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-12">
+               <h5 class="m-0">Operate food store or restaurants? <a href="">Work With Us</a></h5>
             </div>
          </div>
-      </section>
- 
-      <% include ../partials/footer %>
-      <% include ../partials/footer_script %>
+      </div>
+   </section>
+
+      <%- include('../partials/footer'); -%>
+      <%- include('../partials/footer_script'); -%>
       <script src="/assets/js/manage_address.js"></script>
       <script src="http://malsup.github.com/jquery.form.js"></script> 
       <script src="/assets/js/common.js"></script>
