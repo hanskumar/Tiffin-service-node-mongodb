@@ -5,13 +5,9 @@ const wishlistSchema = new mongoose.Schema(
 {
     user_id: { type: Schema.Types.ObjectId, ref: 'User',required: true },
     
-    restaurant_id: {
-        type: Schema.Types.ObjectId, ref: 'User',required: true },
+    restaurant_id: { type: Schema.Types.ObjectId, ref: 'User',required: true },
     
-    status: {
-        type: String,
-        default:'active'
-    }
+    status: { type: String,default:'active'}
   },
   {
     timestamps: true,

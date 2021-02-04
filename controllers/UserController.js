@@ -1,11 +1,13 @@
 const bcrypt        = require('bcrypt');
-
+const mongoose = require("mongoose");
 /**
  * Load Models
  */
 const User = require('../models/UserModel');
 const Wishlist = require('../models/WishlistModel');
 const Address = require('../models/AddressModel');
+
+const Review = require('../models/ReviewModel');
 
 /**
 * Update User Profile
@@ -62,14 +64,21 @@ exports.upload_profile_image = async (req, res,next) => {
 
 exports.favourites = async (req, res,next) => {
  
-    let favourites = await Wishlist.find({ user_id: req.session.user._id}).populate("users");
+    //let favourites = await Wishlist.find({ user_id: req.session.user._id}).populate("users");
+
+    console.log(req.session.user._id);
+
+    let favourites = await Wishlist.aggregate([{
+        $match: {user_id: mongoose.Types.ObjectId(req.session.user._id)}
+        },
+        {$lookup : { from: 'users', localField: 'restaurant_id', foreignField: '_id', as: 'rest_data' }}
+    ]);
+
 
     try{
 
         if(favourites){
- 
-            console.log(favourites);
-     
+      
             res.render('pages/favourite', {
                 favourites: favourites,
                 title: 'My Wishlist'
@@ -209,4 +218,87 @@ exports.update_address = async (req, res, next) => {
         req.flash('error_msg', 'Something Went wrong.')
         res.redirect('back');
     }       
+};
+
+
+//-------Add add_to_wishlist-----------//
+exports.add_to_wishlist = (req, res, next) => {
+
+    const {restaurant_id} = req.body;
+ 
+    console.log(req.session.user._id);
+
+    if(!restaurant_id){
+        res.json({ success: false ,messege:'Fileds are Required'});
+    }
+
+    const add_wishlist = new Wishlist({
+        user_id: req.session.user._id,
+        restaurant_id: restaurant_id
+    });
+
+    add_wishlist.save().then((user)=>{
+
+        res.json({ success: true });
+
+    }).catch(err =>{
+        console.log(err);
+        res.json({ success: false });
+    })
+    
+};
+
+
+//-------Add to Wishlist-----------//
+exports.remove_from_wishlist = (req, res, next) => {
+
+    const restaurant_id = req.body.restaurant_id;
+
+    Wishlist.remove({ user_id: req.session.user._id, restaurant_id: restaurant_id}).then(function(results) {
+        console.log('Deleted Successfully!');
+        req.flash('success_msg', 'Resturent Deleted from wishlist successfully .')
+        res.json({ success: true });
+            
+    }).catch(function(err) {
+        console.log(err);
+        req.flash('error_msg', 'Some Error Occured,Please Try Again.')
+        //res.redirect('/'); 
+    })
+         
+};
+
+
+//-------Add add_to_wishlist-----------//
+exports.submit_review = (req, res, next) => {
+
+    const { comment,resturant_id}   = req.body;
+ 
+    console.log(req.session.user._id);
+
+    if(!resturant_id || !comment){
+        req.flash('error_msg', "Fileds are Required")
+        res.redirect('back');
+    }
+
+    const add_review = new Review({
+        user_id: req.session.user._id, 
+        restaurant_id: resturant_id,
+        rate: 5, 
+        review_text: comment, 
+        posted_on: today, 
+        mod_status	: 'Active',
+        mod_by: '',
+        status: 'Active',
+    });
+
+    add_review.save().then((user)=>{
+
+        req.flash('success_msg', 'Review Submited Successfully.')
+        res.redirect('back');
+
+    }).catch(err =>{
+        req.flash('error_msg', 'Something Went wrongfsfsfasfa.')
+        res.redirect('back');
+    })
+    
 };

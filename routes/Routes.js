@@ -49,6 +49,13 @@ router.get('/get_address_data/:address_id',UserController.get_address_data);
 
 router.post('/update_address',UserController.update_address);
 
+router.post('/add_to_wishlist',UserController.add_to_wishlist);
+
+router.post('/remove_from_wishlist',UserController.remove_from_wishlist);
+
+
+router.post('/submit_review',UserController.submit_review);
+
 
 /*--------Single Resturent Details Page-------------*/
 router.get('/restaurant/:slug',ResturantController.retaurent_details);

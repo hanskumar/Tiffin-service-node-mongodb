@@ -38,11 +38,11 @@ exports.login = async (req, res, next) => {
             console.log(req.session.user);
 
             req.flash('success', 'Login Successfully.')
-            res.redirect('/');
+            res.redirect('back');
 
         } else {
             req.flash('error', 'Wrong Mobile or Password.');
-            res.redirect('/');
+            res.redirect('back');
         }
     } catch (err) {
         console.log(err);

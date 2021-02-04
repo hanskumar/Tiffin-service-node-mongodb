@@ -1,4 +1,7 @@
 const User = require('../models/UserModel');
+const WishlistModel = require('../models/WishlistModel');
+const Review = require('../models/ReviewModel');
+
 const bcrypt        = require('bcrypt');
 
 exports.partner_with_us = (req, res,next) => {
@@ -99,7 +102,7 @@ exports.retaurent_details = async (req, res,next) => {
 
     //console.log(req.params.slug);
     const slug = req.params.slug;
-    var rest_id = req.params.slug.split("-").pop();
+    //var rest_id = req.params.slug.split("-").pop();
 
     if(!slug) {
         res.render('pages/errors/404', { title: 'Page not found' });
@@ -108,21 +111,34 @@ exports.retaurent_details = async (req, res,next) => {
     var rest_details = await User.findOne({role:'restaurant','restaurant_detail': {
         $elemMatch : { slug: slug }}});  
 
-    try{
+    try { 
 
         if(!rest_details){
             res.render('pages/errors/404', { title: 'Page not found' });
         }
 
-        //return res.send(rest_details);
+        if (req.session.isLoggedIn) {
+                
+            var wishlist = await WishlistModel.findOne({restaurant_id:rest_details._id,user_id:req.session.user._id }); 
 
+        } else {
+            wishlist='';
+        }
+
+        var reviews = await Review.aggregate([
+            //{$match : { restaurant_id : mongoose.Types.ObjectId(rest_details._id) }},
+            {$lookup : { from: 'users', localField: 'user_id', foreignField: '_id', as: 'usersdata' }}
+        ]);
+
+        //return res.send(reviews); 
+        
         res.render('pages/restaurant_details', {
             resturant: rest_details,
-            wishlist_item: [],
+            wishlist_item: wishlist,
+            reviews:reviews,
             products: [],
             totalPrice:'', 
-            title: req.params.slug,
-            user: req.session,
+            title: req.params.slug
         });  
 
     } catch (err) {

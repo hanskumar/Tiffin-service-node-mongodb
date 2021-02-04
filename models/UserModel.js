@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const slug = require('mongoose-slug-generator');
+//const slug = require('mongoose-slug-generator');
 
 //Initialize
-mongoose.plugin(slug);
+//mongoose.plugin(slug);
 
 mongoose.set('debug', true);
 
@@ -59,7 +59,7 @@ const userSchema = new mongoose.Schema(
     restaurant_detail:[{
 
         //Define the slug parameters
-        slug: { type: String, slug: "name" },
+        slug: { type: String },
 
         image: { type: String},
 
@@ -122,6 +122,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.index({ "location": "2dsphere" });
+//userSchema.index({ "location": "2dsphere" });
 
 module.exports = mongoose.model("User", userSchema);
