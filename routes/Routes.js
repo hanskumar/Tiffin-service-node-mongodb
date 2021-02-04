@@ -49,4 +49,8 @@ router.get('/get_address_data/:address_id',UserController.get_address_data);
 
 router.post('/update_address',UserController.update_address);
 
+
+/*--------Single Resturent Details Page-------------*/
+router.get('/restaurant/:slug',ResturantController.retaurent_details);
+
 module.exports = router;

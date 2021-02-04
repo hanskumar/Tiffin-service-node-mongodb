@@ -4,6 +4,8 @@ const slug = require('mongoose-slug-generator');
 //Initialize
 mongoose.plugin(slug);
 
+mongoose.set('debug', true);
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -59,6 +61,8 @@ const userSchema = new mongoose.Schema(
         //Define the slug parameters
         slug: { type: String, slug: "name" },
 
+        image: { type: String},
+
         gst_no:{
           type: String,
         },
@@ -94,11 +98,14 @@ const userSchema = new mongoose.Schema(
           type: String,
           default:0
         },
-
         delivery_boys:{
           type: Number,
           integer: true,
           default:0
+        },
+
+        minimum_order_time:{
+          type: String,
         },
 
         cuisine_type:{

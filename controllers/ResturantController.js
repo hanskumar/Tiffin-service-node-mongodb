@@ -75,44 +75,120 @@ exports.restaurants = (req, res,next) => {
 
     if(req.cookies.userLocation){
         
-
-        //return res.send(req.cookies.userLocation);
-
         const lat = req.cookies.userLocation.lat;
         const long = req.cookies.userLocation.long;
 
-        console.log(lat);
+        User.find({role:'restaurant'},(err,result) =>{
 
-        console.log(long);
+            console.log(result);
 
-        const query = {
-            "location.geo": {
-              $near: {
-                $geometry: { type: "Point", coordinates: [-73.9667, 40.78] },
-                $maxDistance: 10000,
-              },
-            },
-        };
-
-        User.aggregate([
-            {
-                $geoNear: {
-                    near :{type: "Point", "$restaurant_detail.location.coordinates":[lat,long]},
-                    distanceField: "distance",
-                   // maxDistance: 2,
-                    spherical: true
-                }
-            }
-        ],(err,data)=>{
-            if(err) {
-                console.log(err);
-              next(err);
-              return;
-            }
-            res.send(data);
-        })
+            res.render('pages/restaurants', {
+                title: 'Tifin Service restaurants',
+                resturants: result,
+            });  
+        });
+        
 
     } else {
         return res.redirect('/');
     }
+}
+
+
+exports.retaurent_details = async (req, res,next) => {
+
+    //console.log(req.params.slug);
+    const slug = req.params.slug;
+    var rest_id = req.params.slug.split("-").pop();
+
+    if(!slug) {
+        res.render('pages/errors/404', { title: 'Page not found' });
+    }
+
+    var rest_details = await User.findOne({role:'restaurant','restaurant_detail': {
+        $elemMatch : { slug: slug }}});  
+
+    try{
+
+        if(!rest_details){
+            res.render('pages/errors/404', { title: 'Page not found' });
+        }
+
+        //return res.send(rest_details);
+
+        res.render('pages/restaurant_details', {
+            resturant: rest_details,
+            wishlist_item: [],
+            products: [],
+            totalPrice:'', 
+            title: req.params.slug,
+            user: req.session,
+        });  
+
+    } catch (err) {
+        console.log(err);
+        req.flash('error', 'Some Error Occured,Please Try Again.')
+        res.redirect('back');
+    }  
+ 
+
+    //let encoded = urlencode(rest_id);
+    if (req.session.isLoggedIn) {
+         wishlist = Wishlist.findAll({
+            where: {
+                user_id: req.session.session_id,
+                restaurant_id: rest_id,
+            }
+        })
+    } else {
+        wishlist='';
+    }
+
+    /*--------Reviews-----------*/
+    
+   
+    const all_data = User.findOne({
+        where: {
+            id: rest_id,
+        },
+        include: [Restaurant_info,Restaurant_items]
+    });
+
+    Promise
+    .all([wishlist, all_data])
+    .then(responses => {
+        console.log(responses);
+        //console.log(responses[0]); // wishlist
+
+        if(responses[0].length >0){
+            var added_in_wishlist = true;   
+        } else {
+            var added_in_wishlist=false;
+        }
+        //console.log(added_in_wishlist);
+         
+        var cart = new Cart(req.session.cart ? req.session.cart : {});
+        console.log(cart);
+        //return false;
+        if(!responses[1]){
+            const error = new Error("Page Not Found");
+            error.httpStatusCode = 500;
+            res.render('pages/errors/404', { title: 'Page not found' });
+        }
+         res.render('pages/restaurant_details', {
+           resturant: responses[1],
+           wishlist_item: added_in_wishlist,
+           products: cart.getItems(),
+           totalPrice:cart.totalPrice, 
+           title: req.params.slug,
+           path: '/',
+           user: req.session,
+           error:'',
+           success: ''
+       });  
+    })
+    .catch(err => {
+        console.log(err);
+        console.log(err);
+    });
 }

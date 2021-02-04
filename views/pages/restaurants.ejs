@@ -1,10 +1,8 @@
-<% include ../partials/head %>
-<% include ../partials/menu %>
-<% include ../partials/login-model %>
-
-<% include ../partials/signup-model %>
-
-<% include ../pages/errors/error_msg %>
+<%- include('../partials/head'); -%>
+<%- include('../partials/menu'); -%>
+<%- include('../pages/errors/error_msg'); -%>
+<%- include('../partials/login-model'); -%>
+<%- include('../partials/signup-model'); -%>
 
     <section class="breadcrumb-osahan pt-5 pb-5 bg-dark position-relative text-center" style="background-image:url(assets/images/offer.jpg);">
          <h1 class="text-white">Restaurants Near You</h1>
@@ -244,22 +242,23 @@
                   <div class="row">
 
                     <% if(resturants.length > 0) { %>
-                     <% for (let pr of resturants) { %>
+                     <% for (let pr of resturants) {  %>
+                        
                      <div class="col-md-4 col-sm-6 mb-4 pb-2">
                         <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
                            <div class="list-card-image">
                               <div class="star position-absolute"><span class="badge badge-success"><i class="icofont-star"></i> 3.1 (300+)</span></div>
-                              <div class="favourite-heart text-danger position-absolute"><a href="/restaurant/<%= pr.slug %>-<%= encodeURI(pr.restaurant_id) %>"></a></div>
+                              <div class="favourite-heart text-danger position-absolute"><a href="/restaurant/<%= pr.restaurant_detail[0].slug %>" class="text-black"></a></div>
                               <div class="member-plan position-absolute"></div>
-                              <a href="/restaurant/<%= pr.slug %>-<%= encodeURI(pr.restaurant_id) %>">
-                                 <img src="assets/images/<%= pr.image %>" class="img-fluid item-img">
+                              <a href="/restaurant/<%= pr.restaurant_detail[0].slug %>">
+                                 <img src="assets/images/<%= pr.restaurant_detail[0].image %>" class="img-fluid item-img">
                               </a>
                            </div>
                            <div class="p-3 position-relative">
                               <div class="list-card-body">
-                                 <h6 class="mb-1"><a href="/restaurant/<%= pr.slug %>-<%= encodeURI(pr.restaurant_id) %>" class="text-black"><%= pr.name %></a></h6>
-                                 <p class="text-gray mb-3"><%= pr.address %></p>
-                                 <p class="text-gray mb-3 time"><span class="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i class="icofont-wall-clock"></i> <%= pr.minimum_order_time %> min</span> <span class="float-right text-black-50"> &#x20b9;<%= pr.tiffin_start_from %></span></p>
+                                 <h6 class="mb-1"><a href="/restaurant/<%= pr.restaurant_detail[0].slug %>" class="text-black"><%= pr.name %></a></h6>
+                                 <p class="text-gray mb-3"><%= pr.restaurant_detail[0].address.address %></p>
+                                 <p class="text-gray mb-3 time"><span class="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i class="icofont-wall-clock"></i> <%= pr.restaurant_detail[0].minimum_order_time %> min</span> <span class="float-right text-black-50"> &#x20b9;<%= pr.restaurant_detail[0].tiffin_start_from %></span></p>
                               </div>
                               <div class="list-card-badge">
                                  <span class="badge badge-success">OFFER</span> <small>65% off | Use Coupon OSAHAN50</small>
@@ -292,7 +291,7 @@
          </div>
       </section>
 
-      <% include ../partials/footer %>
-      <% include ../partials/footer_script %>
+      <%- include('../partials/footer'); -%>
+      <%- include('../partials/footer_script'); -%>
       <script src="/assets/js/search.js"></script>
        <script src="/assets/js/location.js"></script>
