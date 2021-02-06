@@ -26,24 +26,27 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, 'views'));
 //app.set('views', path.join(__dirname, 'views'));
 
-//csrfProtection  = csrf({ cookie: false });
-app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cookieParser());
 
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({
     key: 'user_sid', 
     secret: "etewtekeyboard564564", 
-    resave: false, 
-    saveUninitialized: true,
+    resave: true,  // save session if unmodified
+    saveUninitialized: false,
     store: new MongoDbStore({
         url:process.env.MONGO_CONNECTION_URL,
         collection:'sessions',
-        //ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+        //ttl: 24 * 60 * 60 // Keeps session open for 1 day
     }),  
-    cookie: { maxAge: 1000 * 60 * 60 *24 } //24 hours
+    cookie: { maxAge: 1000 * 60 * 60 *24 *5 } //24 hours* 12 days
 }));
+
+//csrfProtection  = csrf({ cookie: false });
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(cookieParser());
+
 
 
 app.use(flash(app));
@@ -67,6 +70,8 @@ app.use((req, res, next) => {
 
     /* var Cart = new Cart(req.session.cart);
     res.locals.session_cart_itmes    = typeof req.session.cart === "" || !req.session.cart ? '' : req.session.cart; */
+
+    res.locals.session.cart    = req.session.cart || '';
 
     res.locals.success_msg = req.flash('success');
     res.locals.error_msg  = req.flash('error');

@@ -99,7 +99,7 @@ exports.logout = (req, res) => {
            console.log(err);
            req.flash('error', 'Somthing Went Wrong..')
         } else{
-            res.clearCookie("userLocation");
+            //res.clearCookie("userLocation");
             res.redirect('/');
         }
      });

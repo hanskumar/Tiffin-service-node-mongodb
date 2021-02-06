@@ -1,4 +1,4 @@
-<% if(products){ %>        
+<% if(session.cart){ %>        
         <div class="col-md-4">
             <div class="generator-bg rounded shadow-sm mb-4 p-4 osahan-cart-item">
                 <div class="d-flex mb-4 osahan-cart-item-profile">
@@ -10,13 +10,13 @@
                 </div>
                 </div>
 
-                <% for (let Itm of products) { %>
+                <% for (let Itm of Object.values(session.cart.items)) { %>
                     <div class="bg-white rounded shadow-sm mb-2">
                         <div class="gold-members p-2 border-bottom">
-                            <p class="text-gray mb-0 float-right ml-2">&#x20b9;<%=Itm.price %></p>
+                            <p class="text-gray mb-0 float-right ml-2">&#x20b9;<%=Itm.item.price %></p>
                             <span class="count-number float-right">
                             <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                            <input class="count-number-input" type="text" value="<%=Itm.qty %>" readonly="">
+                            <input class="count-number-input" type="text" value="<%=Itm.item.qty %>" readonly="">
                             <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
                             </span>
                             <div class="media">
@@ -44,19 +44,19 @@
                 </div>
                 </div>
                 <div class="mb-2 bg-white rounded p-2 clearfix">
-                <p class="mb-1">Item Total <span class="float-right text-dark">&#x20b9;<%=totalPrice%></span></p>
-                <p class="mb-1">Restaurant Charges <span class="float-right text-dark">&#x20b9;<%=totalPrice*10/100%></span></p>
+                <p class="mb-1">Item Total <span class="float-right text-dark">&#x20b9;<%=session.cart.totalPrice%></span></p>
+                <p class="mb-1">Restaurant Charges <span class="float-right text-dark">&#x20b9;<%=session.cart.totalPrice*10/100%></span></p>
                 <p class="mb-1">Delivery Fee <span class="text-info" data-toggle="tooltip" data-placement="top" title="Total discount breakup">
                     <i class="icofont-info-circle"></i>
                     </span> <span class="float-right text-dark">50</span>
                 </p>
                 <p class="mb-1 text-success">Total Discount 
-                    <span class="float-right text-success">&#x20b9;<%=totalPrice + totalPrice*10/100 + 50%></span>
+                    <span class="float-right text-success">&#x20b9;<%=session.cart.totalPrice + session.cart.totalPrice*10/100 + 50%></span>
                 </p>
                 <hr />
-                <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">&#x20b9;<%=totalPrice + totalPrice*10/100 + 50%></span></h6>
+                <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">&#x20b9;<%=session.cart.totalPrice + session.cart.totalPrice*10/100 + 50%></span></h6>
                 </div>
-                <!---<a href="thanks.html" class="btn btn-success btn-block btn-lg">PAY &#x20b9;<%=totalPrice + totalPrice*10/100 + 50%>
+                <!---<a href="thanks.html" class="btn btn-success btn-block btn-lg">PAY &#x20b9;<%=session.cart.totalPrice + session.cart.totalPrice*10/100 + 50%>
                 <i class="icofont-long-arrow-right"></i></a>-->
             </div>
                 <div class="pt-2"></div>
@@ -65,4 +65,8 @@
             </div>
             <div class="pt-2"></div>	  
         </div>
-<% } %>         
+<% } else { %>      
+
+
+<h3>hekki</h3>
+<% } %>

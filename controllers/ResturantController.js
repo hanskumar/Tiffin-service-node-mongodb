@@ -1,8 +1,11 @@
-const User = require('../models/UserModel');
-const WishlistModel = require('../models/WishlistModel');
-const Review = require('../models/ReviewModel');
+const User                  = require('../models/UserModel');
+const WishlistModel         = require('../models/WishlistModel');
+const Review                = require('../models/ReviewModel');
+const RestaurantItemsModel  = require('../models/RestaurantItemsModel');
 
-const bcrypt        = require('bcrypt');
+const bcrypt                = require('bcrypt');
+
+
 
 exports.partner_with_us = (req, res,next) => {
 
@@ -76,10 +79,10 @@ exports.register = async (req, res, next) => {
 
 exports.restaurants = (req, res,next) => {
 
-    if(req.cookies.userLocation){
+    if(!req.cookies.userLocation){
         
-        const lat = req.cookies.userLocation.lat;
-        const long = req.cookies.userLocation.long;
+        /* const lat = req.cookies.userLocation.lat;
+        const long = req.cookies.userLocation.long; */
 
         User.find({role:'restaurant'},(err,result) =>{
 
@@ -130,13 +133,15 @@ exports.retaurent_details = async (req, res,next) => {
             {$lookup : { from: 'users', localField: 'user_id', foreignField: '_id', as: 'usersdata' }}
         ]);
 
-        //return res.send(reviews); 
+        let Resturant_items = await RestaurantItemsModel.find({restaurant_id:rest_details._id});
+
+        //return res.send(Resturant_items); 
         
         res.render('pages/restaurant_details', {
             resturant: rest_details,
             wishlist_item: wishlist,
             reviews:reviews,
-            products: [],
+            products: Resturant_items,
             totalPrice:'', 
             title: req.params.slug
         });  
@@ -146,65 +151,4 @@ exports.retaurent_details = async (req, res,next) => {
         req.flash('error', 'Some Error Occured,Please Try Again.')
         res.redirect('back');
     }  
- 
-
-    //let encoded = urlencode(rest_id);
-    if (req.session.isLoggedIn) {
-         wishlist = Wishlist.findAll({
-            where: {
-                user_id: req.session.session_id,
-                restaurant_id: rest_id,
-            }
-        })
-    } else {
-        wishlist='';
-    }
-
-    /*--------Reviews-----------*/
-    
-   
-    const all_data = User.findOne({
-        where: {
-            id: rest_id,
-        },
-        include: [Restaurant_info,Restaurant_items]
-    });
-
-    Promise
-    .all([wishlist, all_data])
-    .then(responses => {
-        console.log(responses);
-        //console.log(responses[0]); // wishlist
-
-        if(responses[0].length >0){
-            var added_in_wishlist = true;   
-        } else {
-            var added_in_wishlist=false;
-        }
-        //console.log(added_in_wishlist);
-         
-        var cart = new Cart(req.session.cart ? req.session.cart : {});
-        console.log(cart);
-        //return false;
-        if(!responses[1]){
-            const error = new Error("Page Not Found");
-            error.httpStatusCode = 500;
-            res.render('pages/errors/404', { title: 'Page not found' });
-        }
-         res.render('pages/restaurant_details', {
-           resturant: responses[1],
-           wishlist_item: added_in_wishlist,
-           products: cart.getItems(),
-           totalPrice:cart.totalPrice, 
-           title: req.params.slug,
-           path: '/',
-           user: req.session,
-           error:'',
-           success: ''
-       });  
-    })
-    .catch(err => {
-        console.log(err);
-        console.log(err);
-    });
 }

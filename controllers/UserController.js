@@ -221,6 +221,44 @@ exports.update_address = async (req, res, next) => {
 };
 
 
+/*------------Make address default---------------*/
+exports.make_address_default = async (req, res, next) => {
+
+    const address_id = req.body.address_id;
+
+    if(!address_id){
+        res.json({ success: false ,messege:"No Address Found..!!"});
+    }
+
+    let delivery = await Address.findOne({_id: address_id});
+    
+    try{
+
+        if(delivery){
+            let updated_address = await Address.findByIdAndUpdate(address_id, 
+                { 
+                    default_address: 'yes'
+                }, { new: true 
+            });
+    
+            try{
+    
+                res.json({ success: true ,messege:"set address as default successfully"});
+    
+            } catch (err) {
+                res.json({ success: false ,messege:"Error"});
+            } 
+        } else {
+            res.json({ success: false ,messege:"No Address Found"}); 
+        } 
+
+    } catch (err) {
+        res.json({ success: false ,messege:"Something went wrong. "});
+    }    
+     
+};
+
+
 //-------Add add_to_wishlist-----------//
 exports.add_to_wishlist = (req, res, next) => {
 

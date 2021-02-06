@@ -7,12 +7,12 @@ const LocationController    = require("../controllers/LocationController");
 const ResturantController   = require("../controllers/ResturantController");
 const AuthController        = require("../controllers/AuthController");
 const OrderController       = require("../controllers/OrderController");
-
-const UserController       = require("../controllers/UserController");
+const UserController        = require("../controllers/UserController");
+const CartController        = require("../controllers/CartController");
 
 /**
  * Define all Routes here
- */
+*/
 router.get("/", HomeController.index);
 
 
@@ -57,7 +57,33 @@ router.post('/remove_from_wishlist',UserController.remove_from_wishlist);
 router.post('/submit_review',UserController.submit_review);
 
 
+//----------Add to Cart routes----------*/
+router.post('/add-to-cart',CartController.add_to_cart);
+
+
+/*-------Checkout------------*/
+router.get('/checkout',CartController.checkout); 
+
+
+/*-------Checkout------------*/
+router.post('/place-order',OrderController.order_place); 
+
+
+/*-------Checkout------------*/
+router.get('/thanks',OrderController.thanks); 
+
+
+/*-------Make address as default delivery address on checkout page------------*/
+router.post('/maket-it-default',UserController.make_address_default); 
+
+
 /*--------Single Resturent Details Page-------------*/
 router.get('/restaurant/:slug',ResturantController.retaurent_details);
+
+
+
+
+/*--------Single Resturent Details Page-------------*/
+router.get('/test',CartController.test);
 
 module.exports = router;

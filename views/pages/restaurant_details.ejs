@@ -144,34 +144,16 @@
                         </div>
                      </div>
                      <div class="row">
+
                         <h5 class="mb-4 mt-3 col-md-12">Items<small class="h6 text-black-50" > 3 ITEMS</small></h5>
                         <div class="col-md-12">
                            <div class="bg-white rounded border shadow-sm mb-4">
 
-                                  <div class="menu-list p-3 border-bottom">
-                                  
-                                  <button class="btn btn-outline-danger btn-sm float-right add-to-cart" type="button" data-id=1><i class="icofont-sale-discount"></i>  Add</button>
-
-                                    <span class="count-number float-right">
-                                       <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                                       <input class="count-number-input" type="text" value="1" readonly="">
-                                       <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
-                                    </span>
-
-                                  <div class="media">
-                                      <img class="mr-3 rounded-pill" src="https://askbootstrap.com/preview/osahan-eat/img/5.jpg" alt="Generic placeholder image">
-                                      <div class="media-body">
-                                          <h6 class="mb-1">Veg special Thali</h6><span class="badge badge-danger">Non Veg</span>
-                                          <p class="text-gray mb-0">4 Roti,2 Sabji,Rice,Salad</p>
-                                          <p class="text-gray mb-0">&#x20b9; 70</p>
-                                      </div>
-                                  </div>
-                                  </div>
-                              
+                              <% if(products.length > 0) { %>
+                                 <% for (let items of products) {  %>
                                  <div class="menu-list p-3 border-bottom">
                                   
-                                   
-                                  <button class="btn btn-outline-danger btn-sm float-right add-to-cart" type="button" data-id=2><i class="icofont-sale-discount"></i>  Add</button>
+                                    <button class="btn btn-outline-danger btn-sm float-right add-to-cart" type="button" data-id="<%= items._id %>"><i class="icofont-sale-discount"></i>  Add</button>
 
                                     <span class="count-number float-right">
                                        <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
@@ -179,15 +161,19 @@
                                        <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
                                     </span>
 
-                                  <div class="media">
-                                      <img class="mr-3 rounded-pill" src="https://askbootstrap.com/preview/osahan-eat/img/5.jpg" alt="Generic placeholder image">
-                                      <div class="media-body">
-                                          <h6 class="mb-1">Regular Thaali</h6><span class="badge badge-success">Veg</span>
-                                          <p class="text-gray mb-0">4 Roti,2 Sabji,Rice,Salad</p>
-                                          <p class="text-gray mb-0">&#x20b9; 60</p>
-                                      </div>
+                                    <div class="media">
+                                       <img class="mr-3 rounded-pill" src="https://askbootstrap.com/preview/osahan-eat/img/5.jpg" alt="Generic placeholder image">
+                                       <div class="media-body">
+                                             <h6 class="mb-1"><%= items.item_name %></h6><span class="badge  <%=items.cuisine_type =='Veg' ? 'badge-success' : 'badge-danger' %>"><%= items.cuisine_type %></span>
+                                             <p class="text-gray mb-0"><%= items.item_desc %></p>
+                                             <p class="text-gray mb-0">&#x20b9; <%= items.price %></p>
+                                       </div>
+                                    </div>
                                   </div>
-                                  </div>
+
+                              <% } }%>    
+                              
+                                 
                               
                            </div>
                         </div>
