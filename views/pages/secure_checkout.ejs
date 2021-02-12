@@ -122,64 +122,23 @@
                               </div>
                            </div>
                            <div class="col-sm-8 pl-0">
-                           <form name="place-order" action="/place-order" method="post" >
+                           <form name="place-order" action="/place-order" method="post" id="payment-form">
+                              
                               <div class="tab-content h-100" id="v-pills-tabContent">
-                                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                    <h6 class="mb-3 mt-0 mb-3">Add new card</h6>
-                                    <p>WE ACCEPT <span class="osahan-card">
-                                       <i class="icofont-visa-alt"></i> <i class="icofont-mastercard-alt"></i> <i class="icofont-american-express-alt"></i> <i class="icofont-payoneer-alt"></i> <i class="icofont-apple-pay-alt"></i> <i class="icofont-bank-transfer-alt"></i> <i class="icofont-discover-alt"></i> <i class="icofont-jcb-alt"></i>
-                                       </span>
-                                    </p>
-                                   
-                                       <div class="form-row">
-                                          <div class="form-group col-md-12">
-                                             <label for="inputPassword4">Card number</label>
-                                             <div class="input-group">
-                                                <input type="number" class="form-control" placeholder="Card number">
-                                                <div class="input-group-append">
-                                                   <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="icofont-card"></i></button>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="form-group col-md-8">
-                                             <label>Valid through(MM/YY)
-                                             </label>
-                                             <input type="number" class="form-control" placeholder="Enter Valid through(MM/YY)">
-                                          </div>
-                                          <div class="form-group col-md-4">
-                                             <label>CVV
-                                             </label>
-                                             <input type="number" class="form-control" placeholder="Enter CVV Number">
-                                          </div>
-                                          <div class="form-group col-md-12">
-                                             <label>Name on card
-                                             </label>
-                                             <input type="text" class="form-control" placeholder="Enter Card number">
-                                          </div>
-                                          <div class="form-group col-md-12">
-                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                <label class="custom-control-label" for="customCheck1">Securely save this card for a faster checkout next time.</label>
-                                             </div>
-                                          </div>
-                                          <div class="form-group col-md-12 mb-0">
-                                             <a href="#" class="btn btn-success btn-block btn-lg">PAY
-                                             <i class="icofont-long-arrow-right"></i></a>
-                                          </div>
-                                       </div>
-                                    
-                                 </div>
+                                 
+                                 <div id="card-element"></div>
                                 
                                     <div class="tab-pane fade" id="v-pills-cash" role="tabpanel" aria-labelledby="v-pills-cash-tab">
                                        <h6 class="mb-3 mt-0 mb-3">Cash</h6>
                                        <p>Please keep exact change handy to help us serve you better</p>
                                        <hr>
-                                       <input type="submit" class="btn btn-success btn-block btn-lg" value="Place Order">
+                                       
+                                       <button class="btn btn-success btn-block btn-lg" type="submit">Place Order</button>
                            
                                     </div>
                                  
                               </div>
-                              </form>
+                           </form>
                            </div>
                         </div>
                         <% } %>
@@ -194,5 +153,7 @@
 	  
 	   <%- include('../partials/footer') %>
       <%- include('../partials/footer_script') %>
-      <script src="/assets/js/checkout.js"></script>
+      
+
+      <script type="module" src="/assets/js/checkout.js"></script>
       

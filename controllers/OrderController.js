@@ -27,7 +27,7 @@ exports.order = async (req, res, next) => {
 
 exports.order_place = async (req, res, next) => {
 
-    //return res.send(req.session.cart.items);
+    return res.send(req.body);
 
     console.log(req.session.cart.items);
 
@@ -54,13 +54,21 @@ exports.order_place = async (req, res, next) => {
 
     order.save().then((user)=>{
 
-        req.flash('success', 'Address Added Successfully');
-        res.redirect('/thanks');
+        /* req.flash('success', 'Address Added Successfully');
+        res.redirect('/thanks');*/
+ 
+        delete req.session.cart;
+
+        return res.json({success:true, message : 'Payment successful, Order placed successfully' });
+
+
 
     }).catch(err =>{
-        console.log(err);
+        /* console.log(err);
         req.flash('error', 'Something Went Wrong please try again');
-        res.redirect('back');
+        res.redirect('back'); */
+
+        return res.json({success:false, message : 'Payment Failed,Please try Again' });
     })
       
 }
