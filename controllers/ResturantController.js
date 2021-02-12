@@ -79,7 +79,7 @@ exports.register = async (req, res, next) => {
 
 exports.restaurants = (req, res,next) => {
 
-    if(!req.cookies.userLocation){
+    //if(!req.cookies.userLocation){
         
         /* const lat = req.cookies.userLocation.lat;
         const long = req.cookies.userLocation.long; */
@@ -95,9 +95,9 @@ exports.restaurants = (req, res,next) => {
         });
         
 
-    } else {
+    /* } else {
         return res.redirect('/');
-    }
+    } */
 }
 
 

@@ -1,5 +1,7 @@
 
 const Order     = require('../models/OrderModel');
+const stripe    = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
+
 
 
 exports.order = async (req, res, next) => {
@@ -20,55 +22,73 @@ exports.order = async (req, res, next) => {
         res.redirect('back');
     }   
 
-
-   
 }
 
 
 exports.order_place = async (req, res, next) => {
 
-    return res.send(req.body);
+    //return res.send(req.body);
 
-    console.log(req.session.cart.items);
+    //return res.send(req.session.cart.totalPrice);
 
-    /* const {address,flat_no,landmark,address_type} = req.body;
- 
-    console.log(req.session.session_id);
+    const {stripeToken,Paymentmode } = req.body;
 
-    if(!address || !landmark || !address_type){
-        req.flash('error_msg', "Fileds are Required")
-        return res.redirect('back');
-    } */
+    console.log(req.body.stripeToken);
 
+
+    if(!stripeToken || !Paymentmode){
+        return res.status(422).json({success:false, message : 'Fields are Required,Please try Again' });
+    }
+
+    
     const order = new Order({
         user_id: req.session.user._id,
         //restaurant_id: '',
         itmes: req.session.cart.items, 
-        amount: '', 
-        billing_amount: '', 
+        amount: req.session.cart.totalPrice, 
+        billing_amount: req.session.cart.totalPrice, 
         payment_mode: 'COD',
-        invoice_no: ''
+        invoice_no: '',
     });
 
-    //return res.send(order);
+    order.save().then((placedOrder)=>{
 
-    order.save().then((user)=>{
+        //============Stripe Payment===============
+        if(Paymentmode == 'Card'){
 
-        /* req.flash('success', 'Address Added Successfully');
-        res.redirect('/thanks');*/
- 
-        delete req.session.cart;
+            const charge =  stripe.charges.create({
+                amount: req.session.cart.totalPrice * 100,  // convert in paise
+                currency: 'inr',
+                description: `Order from ${req.session.user.name} with Order ID:  ${placedOrder._id}`,
+                source: stripeToken,
+            }).then((res)=>{
 
-        return res.json({success:true, message : 'Payment successful, Order placed successfully' });
+                placedOrder.payment_status = true;
+                placedOrder.payment_mode = Paymentmode
 
+                placedOrder.save().then((reslt)=>{
+                    delete req.session.cart;
+                    return res.json({success:true, message : 'Payment successful, Order placed successfully' });
 
+                }).catch((err1) =>{
+
+                    delete req.session.cart;
+                    return res.json({success:false, message : 'Error in update order' });
+                })
+
+            }).catch((err2) =>{
+                delete req.session.cart;
+                return res.json({success:false, message : 'Payment Failed,Please try Again' });
+            })
+        }
+
+        //delete req.session.cart;
+        //return res.json({success:true, message : 'Payment successful, Order placed successfully' });
 
     }).catch(err =>{
-        /* console.log(err);
-        req.flash('error', 'Something Went Wrong please try again');
-        res.redirect('back'); */
-
-        return res.json({success:false, message : 'Payment Failed,Please try Again' });
+        console.log(err);
+        
+        return res.json({success:false, message : 'Order save Failed,Please try Again' });
     })
       
 }

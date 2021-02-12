@@ -44,10 +44,9 @@ app.use(session({
 
 //csrfProtection  = csrf({ cookie: false });
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json())
 
 app.use(cookieParser());
-
-
 
 app.use(flash(app));
 app.use(toastr());

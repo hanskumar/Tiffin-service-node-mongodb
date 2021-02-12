@@ -124,20 +124,23 @@
                            <div class="col-sm-8 pl-0">
                            <form name="place-order" action="/place-order" method="post" id="payment-form">
                               
-                              <div class="tab-content h-100" id="v-pills-tabContent">
+                                 <div class="tab-content h-100" id="v-pills-tabContent">
+
+                                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                          <p id="card-error" role="alert"></p>
+                                          <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+                                          <br/><br/>
+                                          <input type="hidden" name="Paymentmode" value="Card" />
+                                    </div>
                                  
-                                 <div id="card-element"></div>
-                                
                                     <div class="tab-pane fade" id="v-pills-cash" role="tabpanel" aria-labelledby="v-pills-cash-tab">
                                        <h6 class="mb-3 mt-0 mb-3">Cash</h6>
                                        <p>Please keep exact change handy to help us serve you better</p>
                                        <hr>
-                                       
-                                       <button class="btn btn-success btn-block btn-lg" type="submit">Place Order</button>
-                           
                                     </div>
-                                 
-                              </div>
+
+                                    <button class="btn btn-success btn-block btn-lg" type="submit">Place Order</button>
+                                 </div>
                            </form>
                            </div>
                         </div>
@@ -151,9 +154,9 @@
          </div>
       </section>
 	  
-	   <%- include('../partials/footer') %>
-      <%- include('../partials/footer_script') %>
-      
-
+	   
+      <%- include('../partials/footer'); -%>
+      <%- include('../partials/footer_script'); -%>
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
       <script type="module" src="/assets/js/checkout.js"></script>
       
