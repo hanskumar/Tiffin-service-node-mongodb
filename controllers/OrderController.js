@@ -27,29 +27,29 @@ exports.order = async (req, res, next) => {
 
 exports.order_place = async (req, res, next) => {
 
-    //return res.send(req.body);
-
-    //return res.send(req.session.cart.totalPrice);
-
     const {stripeToken,Paymentmode } = req.body;
 
-    console.log(req.body.stripeToken);
+    //const {Paymentmode } = req.body;
 
+    console.log(Object.values(req.session.cart.items));
 
-    if(!stripeToken || !Paymentmode){
+    if(!Paymentmode){
         return res.status(422).json({success:false, message : 'Fields are Required,Please try Again' });
     }
 
     
     const order = new Order({
         user_id: req.session.user._id,
-        //restaurant_id: '',
-        itmes: req.session.cart.items, 
+        itmes: Object.values(req.session.cart.items), 
         amount: req.session.cart.totalPrice, 
         billing_amount: req.session.cart.totalPrice, 
         payment_mode: 'COD',
         invoice_no: '',
     });
+ 
+    //return res.send(Object.values(req.session.cart.items));  
+
+    //return res.send(order);  
 
     order.save().then((placedOrder)=>{
 
@@ -61,7 +61,7 @@ exports.order_place = async (req, res, next) => {
                 currency: 'inr',
                 description: `Order from ${req.session.user.name} with Order ID:  ${placedOrder._id}`,
                 source: stripeToken,
-            }).then((res)=>{
+            }).then((res1)=>{
 
                 placedOrder.payment_status = true;
                 placedOrder.payment_mode = Paymentmode
@@ -80,10 +80,11 @@ exports.order_place = async (req, res, next) => {
                 delete req.session.cart;
                 return res.json({success:false, message : 'Payment Failed,Please try Again' });
             })
-        }
 
-        //delete req.session.cart;
-        //return res.json({success:true, message : 'Payment successful, Order placed successfully' });
+        }  else {
+            delete req.session.cart
+            return res.json({success:true, message : 'Order placed succesfully' });
+        }
 
     }).catch(err =>{
         console.log(err);
