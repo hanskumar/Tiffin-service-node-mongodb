@@ -7,17 +7,6 @@ const OrderSchema = new mongoose.Schema(
     //restaurant_id: { type: Schema.Types.ObjectId, ref: 'User',required: true },
 
     items: { type: Object, required: false },
-
-    /* itmes: [{ 
-      item_id: { type: String },
-      restaurant_id: { type: String },
-      item_name: { type: String },
-      item_desc: { type: String },
-      price: { type: String },
-      quantity: { type: String },
-      cuisine_type: { type: String },
-    }], */
-
     tax: { type: String,default:'0'},
     discount: { type: String,default:'0'},
     amount: { type: String},
