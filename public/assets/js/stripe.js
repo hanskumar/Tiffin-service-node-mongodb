@@ -1,35 +1,32 @@
 
 import { placeOrder } from './ApiService.js'
+import { CardWidget } from './cardWidget.js'
 
 export async function initStripe() {
 
-        //alert("hello");
-
         var stripe = Stripe("pk_test_51IAvhfIaHrlYfPz87hBXOjCK1W1jQz7gR9q6pwtUR7SpjFA03KphDuriafON4SrAIn9O3dB5JmRL6sqsSQ0ic98E00FvLctr3N");
-        const elements = stripe.elements();
-        var style = {
-            base: {
-              color: "#32325d",
-              fontFamily: 'Arial, sans-serif',
-              fontSmoothing: "antialiased",
-              fontSize: "16px",
-              "::placeholder": {
-                color: "#32325d"
-              }
-            },
-            invalid: {
-              fontFamily: 'Arial, sans-serif',
-              color: "#fa755a",
-              iconColor: "#fa755a"
-            }
-          };
 
-        var card = elements.create('card', { style, hidePostalCode: true });
-
-        card.mount('#card-element'); 
+        let card = null;
 
         //=============Place order function using ajax IN Javascript=====================
         const paymentForm = document.querySelector('#payment-form');
+        const payment_option = document.querySelector('.payment_option');
+
+        if(!payment_option) {
+            return;
+        }
+        payment_option.addEventListener('click' , (e)=> {
+          if(payment_option.getAttribute('data-option') == 'Card') {
+                // Display Widget
+              card = new CardWidget(stripe);
+              card.mount();
+          } else {
+              alert("COD Selected");
+              card.destroy();
+              let card = null;
+          } 
+        })
+
         if(paymentForm) {
             paymentForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -39,27 +36,17 @@ export async function initStripe() {
                     formObject[key] = value
                     //console.log(key);
                 }
-
-                console.log(formObject);
                 
-                //if (!card) {
-                    // Ajax
-                    /* placeOrder(formObject);
-                    return; */
-                
-                //=====verify Card============
-                stripe.createToken(card).then(function(result) {
-                    // Handle result.error or result.token
-                    console.log(result);
-
-                    formObject.stripeToken = result.token.id;
+                if (!card) {
+                    // Ajax call
                     placeOrder(formObject);
+                    return; 
+                }
 
-                }).catch((error) => {
-
-                    console.log(error);
-
-                });
+                //=====Create Token============
+                const token = await card.createToken()
+                formObject.stripeToken = token.id;
+                placeOrder(formObject);
                 
             })
         }
